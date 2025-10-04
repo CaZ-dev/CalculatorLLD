@@ -1,0 +1,24 @@
+def isValid(s: str) -> bool:
+    stack = []
+    # Mapping of opening and closing parentheses
+    parentheses_map = {')': '(', '}': '{', ']': '['}
+    
+    for char in s:
+        # If it's a closing bracket, check if it matches the last opening bracket in the stack
+        if char in parentheses_map:
+            top_element = stack.pop() if stack else '#'
+            if parentheses_map[char] != top_element:
+                return False
+        else:
+            # If it's an opening bracket, push it to the stack
+            stack.append(char)
+    
+    # If the stack is empty, all parentheses are matched
+    return not stack
+
+# Test cases
+print(isValid("()"))        # True
+print(isValid("()[]{}"))    # True
+print(isValid("(]"))        # False
+print(isValid("([)]"))      # False
+print(isValid("{[]}"))      # True
